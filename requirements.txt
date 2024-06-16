@@ -1,0 +1,7 @@
+Flask==2.1.2
+mysql-connector-python==8.0.28  # Perhatikan perubahan nama library menjadi mysql-connector-python
+opencv-python-headless==4.6.0.66 # Mengganti "opencv-python" dengan "opencv-python-headless"
+numpy==1.22.0  # Menambahkan numpy ke requirements karena Anda mengimportnya
+pdfkit==0.6.2
+Pillow==9.1.1
+Flask-Session==0.4.0

@@ -1,0 +1,101 @@
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i');
+
+  body {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    caption-side: bottom;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+
+  h5 {
+    font-size: 1.25rem;
+  }
+
+  h6 {
+    font-size: 1rem;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+  }
+
+  .bg-green {
+    background-color: #9fbeae;
+    color: #000;
+  }
+
+  .bg-rust {
+    background-color: #bd3913;
+    color: #fff;
+  }
+
+  .bg-burn {
+    background-color: #e57850;
+    color: #fff;
+  }
+
+  .bg-cedar {
+    background-color: #401e14;
+    color: #fff;
+  }
+</style>
+
+<h5>Riwayat Absensi {{ start_date }} s.d {{ end_date }}</h5>
+
+<p><b>Nama: {{ nama_pegawai }}</b></p>
+<p><b>NIP: {{ nip }}</b></p>
+
+<table class="table datatable">
+  <thead>
+    <tr>
+      <th scope="col">Tanggal Absen</th>
+      <th scope="col">Clock In</th>
+      <th scope="col">Clock Out</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in data %}
+    <tr>
+      <td>{{ item[1] }}</td>
+      <td>
+        {% if item[6] <= item[2] <=item[4] %} <span class="badge bg-green">{{ item[2] }}</span>
+          {% elif item[4] <= item[2] <=item[7] %} <span class="badge bg-burn">{{ item[2] }}</span>
+            {% else %}
+            <span class="badge bg-rust">{{ item[2] }}</span>
+            {% endif %}
+      </td>
+      <td>
+        {% if item[8] <= item[3] <=item[5] %} <span class="badge bg-burn">{{ item[3] }}</span>
+          {% elif item[5] <= item[3] <=item[9] %} <span class="badge bg-green">{{ item[3] }}</span>
+            {% elif item[6] <= item[3] <=item[8] %} <span class="badge bg-cedar">Belum absen pulang</span>
+              {% else %}
+              <span class="badge bg-rust">{{ item[3] }}</span>
+              {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p>Dicetak pada {{ curr_date }} {{ curr_time }} WIB</p>

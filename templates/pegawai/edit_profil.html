@@ -1,0 +1,133 @@
+{% extends "pegawai/_layout.html" %}
+{% block content %}
+
+<main id="main" class="main">
+  <div class="pagetitle px-3">
+    <h1>Edit Profil</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('dashboard_pegawai') }}">Home</a></li>
+        <li class="breadcrumb-item">User</li>
+        <li class="breadcrumb-item active">Profil</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section px-3">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <a href="{{ url_for('profil') }}">
+                  <button class="nav-link" data-bs-toggle="tab">Overview</button>
+                </a>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab">Edit
+                  Profil</button>
+              </li>
+            </ul>
+            <br>
+
+            <!-- Flash message -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <i class="bi bi-exclamation-circle me-1"></i> {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <div class="tab-content mx-3">
+              <div class="tab-pane fade show active profile-edit pt-3">
+                <form class="row g-3" method="post" action="/profil_peg_submit">
+
+                  <input type="hidden" name="id_data" value="{{ id_data }}">
+
+                  <div class="row mb-3">
+                    <label for="nip" class="col-md-4 col-lg-3 col-form-label">NIP</label>
+                    <div class="col-md-8 col-lg-9"> <input name="nip" type="number" class="form-control" id="NIP"
+                        value="{{ nip }}" readonly></div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="nama" class="col-md-4 col-lg-3 col-form-label">Nama Lengkap</label>
+                    <div class="col-md-8 col-lg-9"> <input name="nama" type="text" class="form-control" id="nama"
+                        value="{{ nama }}" required></div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="role" class="col-md-4 col-lg-3 col-form-label">Role</label>
+                    <div class="col-md-8 col-lg-9"> <input name="role" type="text" class="form-control" id="role"
+                        value="{{ role }}" readonly></div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                    <div class="col-md-8 col-lg-9"> <input name="email" type="text" class="form-control" id="email"
+                        value="{{ email }}"></div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="username" class="col-md-4 col-lg-3 col-form-label">Username</label>
+                    <div class="col-md-8 col-lg-9"> <input name="username" type="text" class="form-control"
+                        id="username" value="{{ username }}" required></div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="password" class="col-md-4 col-lg-3 col-form-label">Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <div class="input-group">
+                        <input name="password" type="password" class="form-control" id="password" value="{{ password }}"
+                          required>
+                        <div class="input-group-append">
+                          <span class="input-group-text" onclick="password_show_hide();">
+                            <i class="bi bi-eye-slash" id="show_eye"></i>
+                            <i class="bi bi-eye d-none" id="hide_eye"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <script>
+                    function password_show_hide() {
+                      var x = document.getElementById("password");
+                      var show_eye = document.getElementById("show_eye");
+                      var hide_eye = document.getElementById("hide_eye");
+                      hide_eye.classList.remove("d-none");
+                      if (x.type === "password") {
+                        x.type = "text";
+                        show_eye.style.display = "none";
+                        hide_eye.style.display = "block";
+                      } else {
+                        x.type = "password";
+                        show_eye.style.display = "block";
+                        hide_eye.style.display = "none";
+                      }
+                    }
+                    JavaScript
+
+                  </script>
+
+
+
+                  <div class="text-center"> <button type="submit" class="btn btn-rust">Save Changes</button></div>
+                </form>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+  </section>
+</main>
+
+{% endblock %}

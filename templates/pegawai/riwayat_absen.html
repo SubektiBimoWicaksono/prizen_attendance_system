@@ -1,0 +1,255 @@
+{% extends "pegawai/_layout.html" %}
+{% block content %}
+
+<main id="main" class="main">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+  <div class="pagetitle px-3">
+    <h1>Presensi</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('dashboard_pegawai') }}">Home</a></li>
+        <li class="breadcrumb-item">Tabel</li>
+        <li class="breadcrumb-item active">Presensi</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section px-3">
+    <div class="row">
+
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <div class="row text-center pt-3">
+
+              <div class="col-sm-8 col-md-8">
+                <div class="input-group">
+                  <input type="text" class="form-control datepicker" id="start_date" placeholder=" Tanggal Awal"
+                    fdprocessedid="r3y5ti">
+                  <span class="input-group-text">-</span>
+                  <input type="text" class="form-control datepicker" id="end_date" placeholder=" Tanggal Akhir"
+                    fdprocessedid="hkrcf">
+                </div>
+              </div>
+
+              <div class="col-sm-4 col-md-4 pt-1">
+                <button type="button" id="tampilkan-btn" class="btn btn-green btn-sm text-dark">Tampilkan</button>
+                <button type="button" id="cetak-btn" class="btn btn-burnt1 btn-sm">Cetak</button>
+                <button type="button" id="clear-btn" class="btn btn-rust1 btn-sm">Clear</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="col-md-8 col-lg-9">
+              <div class="pt-4">
+                <a href="{{ url_for('absensi') }}">
+                  <button type="submit" class="btn btn-rust1 btn-sm">Presensi</button>
+                </a>
+                <a href="{{ url_for('tambah_surat') }}">
+                  <button type="submitsurat" class="btn btn-green btn-sm">Perizinan</button>
+                </a>
+              </div>
+            </div>
+
+            <h5 class="card-title">Riwayat Presensi</h5>
+
+            <div id="riwayat-absensi" class="row">
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">Tanggal Absen</th>
+                    <th scope="col">Clock In</th>
+                    <th scope="col">Clock Out</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {% for item in data %}
+                  <tr>
+                    <td>{{ item[1] }}</td>
+                    <td>
+                      <!-- <span class="{{ 'badge-bg-green' if item[6] <= item[2] <= item[7] else 'badge-bg-rust' }}">{{
+                        item[2] }}</span> -->
+                      {% if item[6] <= item[2] <=item[4] %} <span class="badge bg-green">{{ item[2] }}</span>
+                        {% elif item[4] <= item[2] <=item[7] %} <span class="badge bg-burn">{{ item[2] }}</span>
+                          {% else %}
+                          <span class="badge bg-rust">{{ item[2] }}</span>
+                          {% endif %}
+                    </td>
+                    <td>
+                      <!-- <span
+                        class="{{ 'badge-bg-burn' if item[8] <= item[3] <= item[5] else 'badge-bg-green' if item[5] <= item[3] <= item[9] else 'badge-bg-rust' }}">{{
+                        item[3] }}</span> -->
+                      {% if item[8] <= item[3] <=item[5] %} <span class="badge bg-burn">{{ item[3] }}</span>
+                        {% elif item[5] <= item[3] <=item[9] %} <span class="badge bg-green">{{ item[3] }}</span>
+                          {% elif item[6] <= item[3] <=item[8] %} <span class="badge bg-cedar">Belum absen pulang</span>
+                            {% else %}
+                            <span class="badge bg-rust">{{ item[3] }}</span>
+                            {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card px-2">
+          <div class="card-body">
+
+            <h5 class="card-title">Waktu Presensi <span>| Today</span></h5>
+
+            <div class="activity">
+              <div class="activity-item d-flex">
+                <div class="activite-label">{{ in_min }}-{{ clock_in }}</div>
+                <i class="bi bi-circle-fill activity-badge text-green align-self-start"></i>
+                <div class="activity-content"> Jam Masuk</div>
+              </div>
+              <div class="activity-item d-flex">
+                <div class="activite-label">{{ clock_in }}-{{ in_max }}</div>
+                <i class="bi bi-circle-fill activity-badge text-burnt align-self-start"></i>
+                <div class="activity-content"> Jam Masuk <span>Max</span></div>
+              </div>
+              <div class="activity-item d-flex">
+                <div class="activite-label"> Absen > {{ in_max }}</div>
+                <i class="bi bi-circle-fill activity-badge text-rust align-self-start"></i>
+                <div class="activity-content"> Pegawai <span>Telat</span></div>
+              </div>
+              <hr>
+              <div class="activity-item d-flex">
+                <div class="activite-label">{{ out_min }}-{{ clock_out }}</div>
+                <i class="bi bi-circle-fill activity-badge text-burnt align-self-start"></i>
+                <div class="activity-content"> Jam Pulang <span>Min</span></div>
+              </div>
+              <div class="activity-item d-flex">
+                <div class="activite-label">{{ clock_out }}-{{ out_max }}</div>
+                <i class="bi bi-circle-fill activity-badge text-green align-self-start"></i>
+                <div class="activity-content"> Jam Pulang</div>
+              </div>
+              <div class="activity-item d-flex">
+                <div class="activite-label"> Absen > {{ out_max }}</div>
+                <i class="bi bi-circle-fill activity-badge text-rust align-self-start"></i>
+                <div class="activity-content"> Bukan Waktu Absen</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Tambahkan script jQuery dan datepicker -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+  <!-- Text script/javascript -->
+  <script>
+    $(document).ready(function () {
+      // Inisialisasi datepicker
+      $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+      });
+
+      // Tampilkan riwayat absensi setelah mengklik tombol "Tampilkan"
+      $('#tampilkan-btn').click(function (e) {
+        e.preventDefault();
+
+        var start_date = $('#start_date').val();
+        var end_date = $('#end_date').val();
+
+        // Kirim permintaan AJAX ke server untuk mendapatkan data riwayat absensi berdasarkan tanggal
+        $.ajax({
+          url: "{{ url_for('riwayat_absen') }}",
+          method: "POST",
+          data: {
+            start_date: start_date,
+            end_date: end_date
+          },
+          success: function (response) {
+            // Perbarui bagian tabel riwayat absensi dengan data yang diterima dari server
+            $('#riwayat-absensi').html(response);
+          },
+          error: function (xhr, status, error) {
+            console.log(error);
+          }
+        });
+      });
+
+      // Klik tombol "Cetak" untuk menghasilkan PDF dari riwayat absensi
+      $('#cetak-btn').click(function (e) {
+        e.preventDefault();
+
+        var start_date = $('#start_date').val();
+        var end_date = $('#end_date').val();
+
+        // Kirim permintaan AJAX ke server untuk menghasilkan PDF dari riwayat absensi berdasarkan tanggal
+        $.ajax({
+          url: "{{ url_for('riwayat_absen') }}",
+          method: "POST",
+          data: {
+            start_date: start_date,
+            end_date: end_date,
+            cetak: true
+          },
+          xhrFields: {
+            responseType: 'blob'
+          },
+          success: function (response) {
+            // Membuat objek URL dari respons blob
+            var url = URL.createObjectURL(response);
+
+            // Membuat elemen anchor untuk mengunduh PDF
+            var link = document.createElement('a');
+            link.href = url;
+            link.download = 'riwayat_absen.pdf';
+            link.click();
+
+            // Menghapus objek URL setelah pengunduhan selesai
+            URL.revokeObjectURL(url);
+          },
+          error: function (xhr, status, error) {
+            console.log(error);
+          }
+        });
+      });
+
+      // Klik tombol "Clear" untuk menghapus nilai input tanggal dan menampilkan semua data riwayat absensi
+      $('#clear-btn').click(function (e) {
+        e.preventDefault();
+
+        // Menghapus nilai input tanggal
+        $('#start_date').val('');
+        $('#end_date').val('');
+
+        // Kirim permintaan AJAX ke server untuk mendapatkan semua data riwayat absensi
+        $.ajax({
+          url: "{{ url_for('riwayat_absen') }}",
+          method: "GET",
+          success: function (response) {
+            // Arahkan pengguna ke halaman riwayat absen
+            window.location.href = "{{ url_for('riwayat_absen') }}";
+          },
+          error: function (xhr, status, error) {
+            console.log(error);
+          }
+        });
+      });
+    });
+  </script>
+
+</main>
+
+{% endblock %}

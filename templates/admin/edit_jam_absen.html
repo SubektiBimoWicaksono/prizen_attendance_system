@@ -1,0 +1,70 @@
+{% extends "admin/_layout.html" %}
+{% block content %}
+
+<main id="main" class="main">
+  <div class="pagetitle px-3">
+    <h1>Edit Jam</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('dashboard_admin') }}">Home</a></li>
+        <li class="breadcrumb-item">Form</li>
+        <li class="breadcrumb-item active">Edit Jam</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section px-3">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Edit Jam Presensi</h5>
+
+            <form class="row g-3" method="post" action="/jam_submit">
+              <div class="col-md-6"> <label for="clock_in" class="form-label">Jam Masuk</label>
+                <input type="text" class="form-control timepicker" id="clock_in" name="clock_in" value="{{ clock_in }}"
+                  required>
+              </div>
+              <div class="col-md-6"> <label for="clock_out" class="form-label">Jam Pulang</label>
+                <input type="text" class="form-control timepicker" id="clock_out" name="clock_out"
+                  value="{{ clock_out }}" required>
+              </div>
+              <div class="col-md-6"> <label for="in_min" class="form-label">Jam Masuk Minimum</label>
+                <input type="text" class="form-control timepicker" id="in_min" name="in_min" value="{{ in_min }}"
+                  required>
+              </div>
+              <div class="col-md-6"> <label for="out_min" class="form-label">Jam Pulang Minimum</label>
+                <input type="text" class="form-control timepicker" id="out_min" name="out_min" value="{{ out_min }}"
+                  required>
+              </div>
+              <div class="col-md-6"> <label for="in_max" class="form-label">Jam Masuk Maksimum</label>
+                <input type="text" class="form-control timepicker" id="in_max" name="in_max" value="{{ in_max }}"
+                  required>
+              </div>
+              <div class="col-md-6"> <label for="out_max" class="form-label">Jam Pulang Maksimum</label>
+                <input type="text" class="form-control timepicker" id="out_max" name="out_max" value="{{ out_max }}"
+                  required>
+              </div>
+              <input type="hidden" name="jam_id" value="{{ 1 }}">
+              <div class="text-center"> <button type="submit" class="btn btn-rust1">Submit</button></div>
+            </form>
+
+            <script type="text/javascript">
+              $(document).ready(function () {
+                $('.timepicker').timepicker({
+                  timeFormat: 'HH:mm',
+                  dropdown: true,
+                  scrollbar: true,
+                  use24hours: true,
+                  interval: 60
+                });
+              });
+            </script>
+
+          </div>
+        </div>
+      </div>
+  </section>
+</main>
+
+{% endblock %}

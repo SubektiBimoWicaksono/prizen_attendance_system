@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Dashboard Pegawai</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <link rel="icon" href="{{ url_for('static', filename='img/prizen.png') }}" />
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/prizen.png') }}" />
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-icons.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/boxicons.min.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/quill.snow.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/quill.bubble.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/remixicon.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/simple-datatables.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+  {% block style %}{% endblock %}
+  <style>
+    .header {
+      background-color: #2d2d2d; /* Default background color */
+      padding: 10px 20px;
+      width: 100%;
+      transition: background-color 0.3s;
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="{{ url_for('dashboard_pegawai') }}" class="logo d-flex align-items-center">
+        <img src="/static/img/prizen.png" alt=""> <span class="d-none d-lg-block text-white">Prizen</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+        <li class="nav-item dropdown pe-3">
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="/static/img/user.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ session["nama_pegawai"] }}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>{{ session["nama_pegawai"] }}</h6>
+              <span>{{ session["username"] }}</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="{{ url_for('profil') }}">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="{{ url_for('logout') }}">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <!-- End Navbar -->
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+        <a {% if request.path=='/dashboard_pegawai' %} class="nav-link" {% else %} class="nav-link collapsed" {% endif
+          %} href="{{ url_for('dashboard_pegawai') }}">
+          <i class="bi bi-grid"></i><span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a {% if request.path=='/riwayat_absen' %} class="nav-link" {% else %} class="nav-link collapsed" {% endif %}
+          href="{{ url_for('riwayat_absen') }}">
+          <i class="bi bi-clipboard-check"></i><span>Presensi</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a {% if request.path=='/dataset' %} class="nav-link" {% else %} class="nav-link collapsed" {% endif %}
+          href="{{ url_for('dataset') }}">
+          <i class="bi bi-camera"></i> <span>Ambil Foto</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+  <!-- End Sidebar -->
+
+  <!-- Main Content -->
+  <section class="section dashboard">
+    {% block content %}{% endblock %}
+  </section>
+  <!-- End Main Content -->
+
+  <!-- Footer -->
+  <footer id="footer" class="footer">
+    <div class="copyright"> &copy; Copyright <strong><span>Prizen Attendance System
+          📸 FaceFlask Team</span></strong>
+      . All Rights Reserved
+    </div>
+    <!-- <div class="credits"> with love <a href="https://freeetemplates.com/">FreeeTemplates</a></div> -->
+  </footer>
+  <!-- End Footer -->
+
+</body>
+
+</html>
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+    class="bi bi-arrow-up-short"></i></a>
+<script src="{{ url_for('static', filename='js/apexcharts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/quill.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/simple-datatables.js') }}"></script>
+<script src="{{ url_for('static', filename='js/tinymce.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/validate.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+  integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+  crossorigin="anonymous"></script>
+
+<!-- Untuk timepicker jam absen -->
+<script src="//code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+<!-- Untuk datepicker filter riwayat absen -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js">
+</script>
+
+{% block script %}{% endblock %}

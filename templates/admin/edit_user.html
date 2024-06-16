@@ -1,0 +1,111 @@
+{% extends "admin/_layout.html" %}
+{% block content %}
+
+<main id="main" class="main">
+  <div class="pagetitle px-3">
+    <h1>Registrasi</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('dashboard_admin') }}">Home</a></li>
+        <li class="breadcrumb-item">Form</li>
+        <li class="breadcrumb-item active">Edit Pengguna</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section px-3">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+
+            <h5 class="card-title">Edit Pengguna</h5>
+
+            <!-- Flash message -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <i class="bi bi-exclamation-circle me-1"></i> {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form class="row g-3" method="post" action="/edit_submit">
+
+              <div class="col-md-6"> <label for="nip" class="form-label">NIP Pengguna</label>
+                <input type="number" class="form-control" id="nip" name="nip" value="{{ nip }}" readonly>
+              </div>
+
+              <div class="col-md-6"> <label for="nama" class="form-label">Nama Pengguna</label>
+                <input type="text" class="form-control" id="nama" name="nama" value="{{ nama }}" >
+              </div>
+
+              <!-- <div class="col-md-6"> <label for="role" class="form-label">Role</label>
+                <input type="text" class="form-control" id="role" name="role" value="{{ role }}" readonly>
+              </div> -->
+              <div class="col-md-6">
+                <label for="role" class="form-label">Role</label>
+                <select name="role" id="role" class="form-select" required>
+                  <option selected>Pilih...</option>
+                  <option value="Admin" {% if role=="Admin" %}selected{% endif %}>Admin</option>
+                  <option value="Pegawai" {% if role=="Pegawai" %}selected{% endif %}>Pegawai</option>
+                </select>
+              </div>
+
+              <div class="col-md-6"> <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ username }}" >
+              </div>
+
+              <div class="col-md-6"> <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email" name="email" value="{{ email }}" >
+              </div>
+
+              <div class="col-md-6">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                  <input type="password" class="form-control" id="password" name="password" value="{{ password }}" }>
+                  <div class="input-group-append">
+                    <span class="input-group-text" onclick="password_show_hide();">
+                      <i class="bi bi-eye-slash" id="show_eye"></i>
+                      <i class="bi bi-eye d-none" id="hide_eye"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <input type="hidden" name="id_data" value="{{ id_data }}"> <!-- Tambahkan input hidden ini -->
+
+              <div class="text-center"> <button type="submit" class="btn btn-rust1">Submit</button></div>
+
+            </form>
+
+            <script>
+              function password_show_hide() {
+                var x = document.getElementById("password");
+                var show_eye = document.getElementById("show_eye");
+                var hide_eye = document.getElementById("hide_eye");
+                hide_eye.classList.remove("d-none");
+                if (x.type === "password") {
+                  x.type = "text";
+                  show_eye.style.display = "none";
+                  hide_eye.style.display = "block";
+                } else {
+                  x.type = "password";
+                  show_eye.style.display = "block";
+                  hide_eye.style.display = "none";
+                }
+              }
+              JavaScript
+
+            </script>
+
+          </div>
+        </div>
+      </div>
+  </section>
+</main>
+
+{% endblock %}

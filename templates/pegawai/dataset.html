@@ -1,0 +1,66 @@
+{% extends "pegawai/_layout.html" %}
+{% block content %}
+
+<main id="main" class="main">
+  <div class="pagetitle px-3">
+    <h1>Training</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('dashboard_pegawai') }}">Home</a></li>
+        <li class="breadcrumb-item">Sampel</li>
+        <li class="breadcrumb-item active">Training</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section px-3">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="col-md-8 col-lg-9">
+              <div class="pt-4">
+                <a href="{{ url_for('kamera_train') }}">
+                  <button type="submit" class="btn btn-rust1 btn-sm">Ambil Foto</button>
+                </a>
+              </div>
+            </div>
+
+            <h5 class="card-title">Foto Sampel</h5>
+
+            <table class="table2 datatable table-borderless" id="imageTable">
+              <thead>
+                <tr>
+                  <th scope="col">Sampel</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for img in image_paths %}
+                <tr>
+                  <td scope="row"><img src="{{ img }}"></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <script src="{{ url_for('static', filename='js/simple-datatables.js') }}"></script>
+
+  <script>
+    // Simple Datatable
+    let table = document.querySelector('.table2');
+    let dataTable = new simpleDatatables.DataTable(table, {
+      searchable: false,
+      header: false,
+      scrollY: true,
+    });
+  </script>
+
+</main>
+
+{% endblock %}

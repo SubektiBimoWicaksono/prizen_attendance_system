@@ -1,0 +1,41 @@
+<table class="table datatable">
+  <thead>
+    <tr>
+      <th scope="col">Tanggal</th>
+      <th scope="col">NIP</th>
+      <th scope="col">Nama</th>
+      <th scope="col">Clock In</th>
+      <th scope="col">Clock Out</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in data %}
+    <tr>
+      <td>{{ item[1] }}</td>
+      <td>{{ item[2] }}</td>
+      <td>{{ item[3] }}</td>
+      <td>
+        {% if item[9] <= item[5] <=item[7] %} <span class="badge bg-green">{{ item[5] }}</span>
+          {% elif item[7] <= item[5] <=item[10] %} <span class="badge bg-burn">{{ item[5] }}</span>
+            {% else %}
+            <span class="badge bg-rust">{{ item[5] }}</span>
+            {% endif %}
+      </td>
+      <td>
+        {% if item[11] <= item[6] <=item[8] %} <span class="badge bg-burn">{{ item[6] }}</span>
+          {% elif item[8] <= item[6] <=item[12] %} <span class="badge bg-green">{{ item[6] }}</span>
+            {% elif item[9] <= item[6] <=item[11] %} <span class="badge bg-cedar">Belum absen</span>
+              {% else %}
+              <span class="badge bg-rust">{{ item[6] }}</span>
+              {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+  // Simple Datatable
+  let table = document.querySelector('.table');
+  let dataTable = new simpleDatatables.DataTable(table);
+</script>

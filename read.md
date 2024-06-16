@@ -1,0 +1,1 @@
+ternyata file static gk boleh diganti jadi assets, klo mau folder assetnya di taro dalem folder static, klo gk gitu cssnya gk kebaca

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Login Prizen</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link rel="icon" href="{{ url_for('static', filename='img/prizen.png') }}" />
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/prizen.png') }}" />
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-icons.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/boxicons.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/quill.snow.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/quill.bubble.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/remixicon.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/simple-datatables.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+
+    <style>
+        body {
+            background-image: url({{ url_for('static', filename='img/cover.jpg') }});
+            background-size: cover;
+            background-position: 0 0;
+            animation: moveBackground 15s linear infinite;
+        }
+        
+        @keyframes moveBackground {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: 100% 100%;
+            }
+        }
+
+        .credits {
+            color: black;
+            font-weight: bold;
+            padding: 10px 50px;
+            font-size: 0.80em; /* Optional: Adjust the font size */
+        }
+       
+    </style>
+</head>
+
+
+<body>
+    <main>
+        <div class="container">
+            <section
+                class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-center mt-4">
+                                        <a href="" class="logo d-flex align-items-center w-auto">
+                                            <img src="/static/img/prizen.png" alt="" style="width: 50px; height: 250px;">
+                                            <!-- <span class="d-none d-lg-block">Prizen Attendance System</span> -->
+                                        </a>
+                                    </div>
+                                    <div class="pt-2 pb-2">
+                                        <h5 class="text-center pb-0 fs-5" style="font-weight: bold;">Prizen Sign In</h5>
+                                    </div>
+
+                                    <!-- Flash message -->
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                    {% for message in messages %}
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <i class="bi bi-exclamation-circle me-1"></i> {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endwith %}
+
+                                    <form method="post" action="/login_submit" class="row g-3 needs-validation"
+                                        novalidate>
+                                        <div class="col-12">
+                                            <label for="username" class="form-label" style="font-weight: bold;">Username : </label>
+                                            <div class="input-group has-validation">
+                                                <span class="input-group-text" id="inputGroupPrepend">@</span> <input
+                                                    type="text" name="username" class="form-control" id="username"
+                                                    required>
+                                                <div class="invalid-feedback">Username tidak boleh kosong!</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="password" class="form-label" style="font-weight: bold;" >Password : </label> <input
+                                                type="password" name="password" class="form-control" id="password"
+                                                required>
+                                            <div class="invalid-feedback">Password tidak boleh kosong!</div>
+                                        </div>
+                                        <div class="col-12 mb-3"> <button class="btn btn-rust1 w-100"
+                                                type="submit">Login</button></div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="credits"> &copy; Made by 📸 FaceFlask Team
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+    <script src="{{ url_for('static', filename='js/apexcharts.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/quill.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/simple-datatables.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tinymce.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/validate.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+
+</html>
